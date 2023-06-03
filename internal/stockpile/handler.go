@@ -9,6 +9,10 @@ import (
 	"FLH/internal/common"
 )
 
+type DataStockpile struct {
+	Id string
+}
+
 /*
 Handle the stockpile page
 "/stockpile"
@@ -18,7 +22,10 @@ func HandleStockpile(w http.ResponseWriter, r *http.Request) {
 	dataIndex := common.DataIndex{}
 	tpl, err := template.ParseFiles("static/templates/stockpile/stockpile.html")
 	utils.CheckErr(err)
-	dataIndex.Main = common.Execute(tpl, nil)
+
+	stockpile := DataStockpile{}
+	stockpile.Id = "bMat"
+	dataIndex.Main = common.Execute(tpl, stockpile)
 
 	common.ExecuteFinishPage(w, dataIndex)
 }
