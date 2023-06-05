@@ -1,9 +1,9 @@
 <div class="stockpileItemBox">
     <img class="stockpileItemImg" src="{{.ImageLink}}">
-    <div class="stockpileItemTitle">{{.Title}}</div>
+    <div class="stockpileItemTitle">{{.Name}}</div>
     <div class="stockpileItemNumberBar">
         <btn class="stockpileItemSub" onclick="stockpileItemNumberClick('false', '{{.Id}}')">-</btn>
-        <div class="stockpileItemNumber" id="{{.Id}}">{{.ItemNb}}</div>
+        <div class="stockpileItemNumber" id="{{.Id}}">{{.Nb}}</div>
         <btn class="stockpileItemAdd" onclick="stockpileItemNumberClick('true', '{{.Id}}')">+</btn>
     </div>
 </div>

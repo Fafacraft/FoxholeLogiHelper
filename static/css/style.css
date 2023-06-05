@@ -7,11 +7,25 @@ body {
     background-color: #2F2F2F;
     color: #E6E6E6
 }
+
 btn {
     cursor: pointer;
 }
 
 /* STOCKPILE */
+.stockpileItemList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.stockpileItemSublist {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    border-bottom: 3px solid #272626;
+}
 .stockpileItemBox {
     width: 100px;
     height: 150px;
