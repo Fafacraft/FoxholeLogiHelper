@@ -36,6 +36,8 @@ type DataItemBox struct {
 	RMats     int
 	EMats     int
 	HeMats    int
+
+	Class string
 }
 
 /*
@@ -105,6 +107,9 @@ func makeItemBoxList(option string, value any) []template.HTML {
 		itemBox := DataItemBox{}
 		err = rows.Scan(&itemBox.Id, &itemBox.Name, &itemBox.Category, &itemBox.Priority, &itemBox.Nb, &itemBox.NbNeeded, &itemBox.ImageLink, &itemBox.BMats, &itemBox.RMats, &itemBox.EMats, &itemBox.HeMats)
 		utils.CheckErr(err)
+
+		// get the border color
+		itemBox.Class = FindBorderColorClass(itemBox.Id)
 
 		tplRaw, err := template.ParseFiles("static/templates/stockpile/itemBox.html")
 		utils.CheckErr(err)

@@ -11,6 +11,7 @@ function stockpileItemNumberClick(isAdd, id) {
     headers: {
       'Content-Type': 'application/json',
     },
+    // JSON format send here
     body: JSON.stringify({ isAdd: isAdd === "true", id: id }),
   })
     .then(response => response.json())
@@ -19,9 +20,17 @@ function stockpileItemNumberClick(isAdd, id) {
         console.log(data);
       // Handle the response from the backend
       if (data.status === 'success') {
-        // Update the number element with the new count
-        var numberElement = document.getElementById(id); 
+
+        // LOGIC GOES HERE
+        var numberElement = document.getElementById("nb#"+id); ;
+        var itemBoxElement = document.getElementById("itemBox#"+id);
         numberElement.textContent = data.itemNumber;
+
+        // remove all border class
+        itemBoxElement.classList.remove("borderCritical", "borderLow", "borderNotFull", "borderFull", "borderOverfilled")
+        // set class
+        itemBoxElement.classList.add(data.class);
+
       } else {
         console.error('Failed to update item count:', data.error);
       }

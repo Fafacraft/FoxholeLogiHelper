@@ -44,3 +44,22 @@ btn {
     justify-content: space-evenly;
     width: 100%;
 }
+
+
+
+/* STOCKPILE USEFULL */
+.borderCritical {
+    border: 5px solid rgb(78, 18, 18);
+}
+.borderLow {
+    border: 5px solid rgb(179, 43, 43);
+}
+.borderNotFull {
+    border: 5px solid rgb(219, 207, 35);
+}
+.borderFull {
+    border: 5px solid rgb(45, 241, 55);
+}
+.borderOverfilled {
+    border: 5px solid rgb(1, 156, 14);
+}
