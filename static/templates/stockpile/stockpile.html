@@ -1,9 +1,5 @@
-<div class="stockpileItemBox">
-    <img class="stockpileItemImg" src="image">
-    <div class="stockpileItemTitle">Title</div>
-    <div class="stockpileItemNumberBar">
-        <btn class="stockpileItemSub" onclick="stockpileItemNumberClick('false', '{{.Id}}')">-</btn>
-        <div class="stockpileItemNumber" id="{{.Id}}">number</div>
-        <btn class="stockpileItemAdd" onclick="stockpileItemNumberClick('true', '{{.Id}}')">+</btn>
-    </div>
+<div class="stockpileItemList">
+    {{range .ItemBoxList}}
+    {{.}}
+    {{end}}
 </div>
