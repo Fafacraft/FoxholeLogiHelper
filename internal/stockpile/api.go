@@ -104,9 +104,9 @@ func FindBorderColorClass(id string) string {
 		class = "borderCritical"
 	} else if nb <= nbNeeded/2 {
 		class = "borderLow"
-	} else if nb <= nbNeeded {
+	} else if nb < nbNeeded {
 		class = "borderNotFull"
-	} else if nb <= nbNeeded*2 {
+	} else if nb < nbNeeded*2 {
 		class = "borderFull"
 	} else {
 		class = "borderOverfilled"
