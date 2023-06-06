@@ -28,7 +28,7 @@ btn {
 }
 .stockpileItemBox {
     width: 100px;
-    height: 150px;
+    height: 185px;
     border: 5px solid rgb(78, 18, 18);
     display: flex;
     flex-direction: column;
@@ -39,10 +39,23 @@ btn {
     height: 100px;
     margin-bottom: 5px;
 }
+.stockpileItemText {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.stockpileItemTitle {
+    margin-right: 0px;
+    margin-left: 10px;
+}
 .stockpileItemNumberBar {
+    border-top: 2px solid #272626;
     display: flex;
     justify-content: space-evenly;
-    width: 100%;
+    width: 100px;
+    font-weight: 900;
+    font-size: 24px;
 }
 
 
