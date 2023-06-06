@@ -116,7 +116,6 @@ func makeItemBoxList(option string, value any) []template.HTML {
 		tpl := *common.Execute(tplRaw, itemBox)
 		finalList = append(finalList, tpl)
 	}
-	fmt.Println(finalList)
 
 	return finalList
 }
