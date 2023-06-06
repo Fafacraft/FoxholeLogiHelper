@@ -13,6 +13,21 @@ btn {
 }
 
 /* STOCKPILE */
+.stockpileSortingMenu {
+    display:flex;
+    width: 100%;
+    justify-content: space-around;
+    font-size: 24px;
+}
+.stockpileSortingItem {
+    background-color: #272626;
+    padding: 10px;
+    border-radius: 3px;
+}
+.stockpileSortingItem:hover {
+    background-color: #6e6e6e;
+}
+
 .stockpileItemList {
     display: flex;
     flex-direction: column;

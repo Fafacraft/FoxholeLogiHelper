@@ -2,7 +2,6 @@ package stockpile
 
 import (
 	"database/sql"
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -48,19 +47,32 @@ func HandleStockpile(w http.ResponseWriter, r *http.Request) {
 	// TODO : bla bla fill indexData, then executeFinishPage
 	dataIndex := common.DataIndex{}
 
+	var moreOptions string
+	sortingMethod := r.URL.Query().Get("sorting")
+	// set the moreOptions
+	if sortingMethod == "bMatsOnly" {
+		moreOptions += " AND (rMats == 0 AND eMats == 0 AND heMats == 0)"
+	}
+	if sortingMethod == "rMats" {
+		moreOptions += " AND (rMats != 0)"
+	}
+	if sortingMethod == "eMats" {
+		moreOptions += " AND (eMats != 0)"
+	}
+
 	tpl, err := template.ParseFiles("static/templates/stockpile/stockpile.html")
 	utils.CheckErr(err)
 
 	stockpile := DataStockpile{}
 	// prepare different list with different priorities
-	stockpile.ItemBoxList01 = makeItemBoxList("priority", 1)
-	stockpile.ItemBoxList02 = makeItemBoxList("priority", 2)
-	stockpile.ItemBoxList03 = makeItemBoxList("priority", 3)
-	stockpile.ItemBoxList04 = makeItemBoxList("priority", 4)
-	stockpile.ItemBoxList05 = makeItemBoxList("priority", 5)
-	stockpile.ItemBoxList06 = makeItemBoxList("priority", 6)
-	stockpile.ItemBoxList07 = makeItemBoxList("priority", 7)
-	stockpile.ItemBoxList08 = makeItemBoxList("priority", 8)
+	stockpile.ItemBoxList01 = makeItemBoxList("priority == 1" + moreOptions)
+	stockpile.ItemBoxList02 = makeItemBoxList("priority == 2" + moreOptions)
+	stockpile.ItemBoxList03 = makeItemBoxList("priority == 3" + moreOptions)
+	stockpile.ItemBoxList04 = makeItemBoxList("priority == 4" + moreOptions)
+	stockpile.ItemBoxList05 = makeItemBoxList("priority == 5" + moreOptions)
+	stockpile.ItemBoxList06 = makeItemBoxList("priority == 6" + moreOptions)
+	stockpile.ItemBoxList07 = makeItemBoxList("priority == 7" + moreOptions)
+	stockpile.ItemBoxList08 = makeItemBoxList("priority == 8" + moreOptions)
 
 	dataIndex.Main = common.Execute(tpl, stockpile)
 
@@ -68,12 +80,14 @@ func HandleStockpile(w http.ResponseWriter, r *http.Request) {
 }
 
 /*
-list all items with appropriate :
-- all
-- priority  (int)
-- category  (string)
+list all items.
+
+can use condition to add a WHERE clause with this condition
+ex:
+condition = "rMats == 0 && priority == 1"
+does ; "SELECT * FROM stockpile WHERE rMats == 0 && priority == 1"
 */
-func makeItemBoxList(option string, value any) []template.HTML {
+func makeItemBoxList(condition string) []template.HTML {
 	finalList := []template.HTML{}
 
 	// open the db
@@ -81,25 +95,15 @@ func makeItemBoxList(option string, value any) []template.HTML {
 	utils.CheckErr(err)
 	// do the request with appropriate option
 	var rows *sql.Rows
-	switch option {
-	case "all":
-		preparedRequest, err := db.Prepare("SELECT * FROM stockpile")
-		utils.CheckErr(err)
-		rows, err = preparedRequest.Query()
-		break
-	case "priority":
-		preparedRequest, err := db.Prepare("SELECT * FROM stockpile WHERE priority == ?")
-		utils.CheckErr(err)
-		rows, err = preparedRequest.Query(value)
-		break
-	case "category":
-		preparedRequest, err := db.Prepare("SELECT * FROM stockpile WHERE category == ?")
-		utils.CheckErr(err)
-		rows, err = preparedRequest.Query(value)
-		break
-	default:
-		fmt.Println("ERROR : Unreconized option in makeItemBoxList()")
+
+	rawRequest := "SELECT * FROM stockpile"
+	if condition != "" {
+		rawRequest += " WHERE " + condition
 	}
+	preparedRequest, err := db.Prepare(rawRequest)
+	utils.CheckErr(err)
+	rows, err = preparedRequest.Query()
+
 	defer rows.Close() // THE THING INSIDE DEFER IS EVALUATED HERE, EVEN IF IT RUNS AT THE END
 
 	// get each item resulting
